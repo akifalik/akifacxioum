@@ -1,0 +1,9 @@
+@{ var cards = new (string, object)[]{("Total Customers",ViewBag.Customers),("Total Leads",ViewBag.Leads),("Open Leads",ViewBag.OpenLeads),("Total Opportunities",ViewBag.Opps),("Open Opportunities",ViewBag.OpenOpps),("Won",ViewBag.Won),("Lost",ViewBag.Lost),("Pipeline Value",((decimal)ViewBag.Pipeline).ToString("N0"))}; }
+<div class="row g-3 mb-4">@foreach (var c in cards) {<div class="col-6 col-md-3"><div class="card"><div class="card-body"><div class="text-muted small">@c.Item1</div><div class="fs-3">@c.Item2</div></div></div></div>}</div>
+<div class="row g-3"><div class="col-md-4"><canvas id="lead"></canvas></div><div class="col-md-4"><canvas id="opp"></canvas></div><div class="col-md-4"><canvas id="sales"></canvas></div></div>
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+const mk=(id,type,d,label)=>new Chart(document.getElementById(id),{type,data:{labels:d.labels,datasets:[{label,data:d.data}]}});
+mk('lead','doughnut',@Html.Raw(ViewBag.LeadChart),'Leads'); mk('opp','bar',@Html.Raw(ViewBag.OppChart),'Opportunities'); mk('sales','line',@Html.Raw(ViewBag.SalesChart),'Won amount');
+</script>}
